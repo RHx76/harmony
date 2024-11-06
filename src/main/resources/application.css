@@ -1,0 +1,13 @@
+#lblTitle:hover{
+-fx-text-fill:"grey";
+}
+
+#LoginBtn{
+-fx-border-radius:10;
+}
+
+#box{
+-fx-display:"flex";
+-fx-align-items:"center";
+-fx-justify-content:"center";
+}

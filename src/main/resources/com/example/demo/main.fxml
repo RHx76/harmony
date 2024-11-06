@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
+   <children>
+      <Label layoutX="56.0" layoutY="10.0" prefHeight="48.0" prefWidth="127.0" text="Harmony">
+         <font>
+            <Font name="System Italic" size="29.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.8313725590705872" green="0.686274528503418" blue="0.27843138575553894" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="0.843137264251709" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <AnchorPane layoutX="31.0" layoutY="58.0" prefHeight="400.0" prefWidth="950.0" style="-fx-background-color: #222222; -fx-border-color: #ffd700; -fx-border-width: 2; -fx-border-radius: 6;">
+         <children>
+            <Label fx:id="songLabel" alignment="CENTER" layoutX="86.0" layoutY="210.0" prefHeight="54.0" prefWidth="778.0" text="current track" textFill="#ffdd00">
+               <font>
+                  <Font size="37.0" />
+               </font>
+            </Label>
+            <ProgressBar fx:id="songProgressBar" layoutX="65.0" layoutY="277.0" prefHeight="22.0" prefWidth="840.0" progress="0.0" style="-fx-background-color: green;" />
+            <Button fx:id="playButton" layoutX="247.0" layoutY="322.0" mnemonicParsing="false" onAction="#playMedia" prefHeight="46.0" prefWidth="92.0" style="-fx-background-color: #ffd700;" text="Play" />
+            <Button fx:id="pauseButton" layoutX="355.0" layoutY="319.0" mnemonicParsing="false" onAction="#pauseMedia" prefHeight="46.0" prefWidth="92.0" style="-fx-background-color: #ffd700;" text="Pause" />
+            <Button fx:id="resetButton" layoutX="473.0" layoutY="319.0" mnemonicParsing="false" onAction="#resetMedia" prefHeight="46.0" prefWidth="92.0" style="-fx-background-color: #ffd700;" text="Reset" />
+            <Button fx:id="previousButton" layoutX="154.0" layoutY="123.0" mnemonicParsing="false" onAction="#previousMedia" prefHeight="46.0" prefWidth="92.0" style="-fx-background-color: #ffd700;" text="Previous" />
+            <Button fx:id="nextButton" layoutX="781.0" layoutY="122.0" mnemonicParsing="false" onAction="#nextMedia" prefHeight="46.0" prefWidth="92.0" style="-fx-background-color: #ffd700;" text="Next" />
+            <ComboBox fx:id="speedComboBox" layoutX="584.0" layoutY="320.0" onAction="#changeSpeed" prefHeight="46.0" prefWidth="115.0" promptText="Speed" style="-fx-background-color: #ffd700;" />
+            <Slider fx:id="volumeMedia" layoutX="711.0" layoutY="321.0" onDragDetected="#onVolumeChange" prefHeight="46.0" prefWidth="195.0" value="50.0" />
+            <ImageView fitHeight="177.0" fitWidth="259.0" layoutX="391.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../bully.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="32.0" layoutY="490.0" prefHeight="215.0" prefWidth="353.0" style="-fx-background-color: #ffdd00; -fx-border-radius: 6;">
+         <children>
+            <Label layoutX="35.0" layoutY="72.0" style="-fx-border-radius: 10px;" text="Saved Playlists" textFill="WHITE">
+               <font>
+                  <Font size="41.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="641.0" layoutY="482.0" prefHeight="215.0" prefWidth="353.0" style="-fx-background-color: #222222;">
+         <children>
+            <Label layoutX="35.0" layoutY="72.0" style="-fx-border-radius: 10px;" text="Quote" textFill="WHITE">
+               <font>
+                  <Font size="41.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
