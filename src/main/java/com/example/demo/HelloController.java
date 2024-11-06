@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -49,6 +51,9 @@ public class HelloController implements Initializable {
     private Media media;
 
     private MediaPlayer mediaPlayer;
+
+    @FXML
+    private ListView<String> myListView;
 
     @FXML
     public void playMedia()
@@ -129,7 +134,6 @@ public class HelloController implements Initializable {
                 running=true;
                 double current=mediaPlayer.getCurrentTime().toSeconds();
                 double end=mediaPlayer.getTotalDuration().toSeconds();
-                System.out.println(current/end);
                 songProgressBar.setProgress(current/end);
 
                 if(current/end==1)
@@ -146,7 +150,8 @@ public class HelloController implements Initializable {
     public void cancelTime()
     {
         running=false;
-        timer.cancel();
+        if(timer!=null)
+            timer.cancel();
     }
 
 
@@ -162,6 +167,7 @@ public class HelloController implements Initializable {
             for(File file:files)
             {
                 songs.add(file);
+                myListView.getItems().add(file.getName());
                 System.out.println(file);
             }
 
@@ -183,6 +189,39 @@ public class HelloController implements Initializable {
             }
         });
         songProgressBar.setStyle("-fx-accent: #ffdd00;");
+        myListView.setStyle("-fx-accent: #ffdd00; -fx-background-color:#222222 !important;");
+        myListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> param) {
+                return new ListCell<String>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText(null);
+                            setStyle(""); // Reset style if the item is empty
+                        } else {
+                            setText(item);
+                            setTextFill(Color.rgb( 255, 195, 0 ));  // Text color
+                            setStyle("-fx-background-color: #222222;");
+                        }
+                    }
+                };
+            }
+        });
+
+        myListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                songNumber=myListView.getSelectionModel().getSelectedIndex();
+                mediaPlayer.stop();
+                media = new Media(songs.get(songNumber).toURI().toString());
+                mediaPlayer = new MediaPlayer(media);
+                songLabel.setText(songs.get(songNumber).getName());
+                if(running)
+                    timer.cancel();
+            }
+        });
     }
 
 }
