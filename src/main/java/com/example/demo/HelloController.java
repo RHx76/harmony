@@ -19,6 +19,9 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -61,6 +64,9 @@ public class HelloController implements Initializable {
 
     @FXML
     private ListView<String> myListView;
+
+    @FXML
+    private ListView<String> playlistsListview;
 
     @FXML
     public void playMedia()
@@ -251,6 +257,73 @@ public class HelloController implements Initializable {
                 songLabel.setText(songs.get(songNumber).getName());
                 if(running)
                     timer.cancel();
+            }
+        });
+
+        File directory=new File("./");
+        File[] files = directory.listFiles();
+        System.out.println("hey!123"+directory.getAbsolutePath());
+
+        if(files!=null)
+        {
+            for(File file:files)
+            {
+                if(file.getName().endsWith(".ser"))
+                    playlistsListview.getItems().add(file.getName().substring(0,file.getName().indexOf('.')));
+            }
+        }
+
+        playlistsListview.setStyle("-fx-accent: #ffdd00; -fx-background-color:#222222 !important;");
+        playlistsListview.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> param) {
+                return new ListCell<String>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText(null);
+                            setStyle(""); // Reset style if the item is empty
+                        } else {
+                            setText(item);
+                            setTextFill(Color.rgb( 255, 195, 0 ));  // Text color
+                            setStyle("-fx-background-color: #222222;");
+                        }
+                    }
+                };
+            }
+        });
+
+        playlistsListview.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                String selectedPlaylistName=playlistsListview.getSelectionModel().getSelectedItem();
+                mediaPlayer.stop();
+                System.out.println("selected playlist:"+selectedPlaylistName);
+                //converting saved playlist to arraylist
+                try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(selectedPlaylistName+".ser"))) {
+                    ArrayList<File> fileList = (ArrayList<File>) in.readObject();
+                    System.out.println("First file:"+fileList.getFirst().getAbsolutePath());
+                    songs=fileList;
+
+                    //update the current queue listview to new playlist songs
+                    myListView.getItems().clear();
+                    for(File file:fileList)
+                    {
+                        myListView.getItems().add(file.getName());
+                        System.out.println(file);
+                    }
+
+                    songNumber=0;
+                    media = new Media(songs.get(songNumber).toURI().toString());
+                    mediaPlayer = new MediaPlayer(media);
+                    songLabel.setText(songs.get(songNumber).getName());
+                    if(running)
+                        timer.cancel();
+
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
