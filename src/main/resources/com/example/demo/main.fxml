@@ -90,5 +90,6 @@
             </LinearGradient>
          </textFill>
       </Label>
+      <Button fx:id="newPlaylistButton" layoutX="252.0" layoutY="477.0" mnemonicParsing="false" onAction="#openPlaylistCreationScene" prefHeight="32.0" prefWidth="111.0" style="-fx-background-color: #ffd700;" text="New Playlist" />
    </children>
 </AnchorPane>
