@@ -59,15 +59,6 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="627.0" layoutY="473.0" prefHeight="215.0" prefWidth="353.0" style="-fx-background-color: #ffdd00; -fx-border-radius: 6;">
-         <children>
-            <Label layoutX="35.0" layoutY="72.0" style="-fx-border-radius: 10px;" text="Quote" textFill="WHITE">
-               <font>
-                  <Font size="41.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
       <ListView fx:id="myListView" layoutX="32.0" layoutY="523.0" prefHeight="200.0" prefWidth="397.0" style="-fx-background-color: #222222;" />
       <Label layoutX="41.0" layoutY="467.0" prefHeight="48.0" prefWidth="207.0" text="Current Queue">
          <font>
@@ -91,5 +82,27 @@
          </textFill>
       </Label>
       <Button fx:id="newPlaylistButton" layoutX="252.0" layoutY="477.0" mnemonicParsing="false" onAction="#openPlaylistCreationScene" prefHeight="32.0" prefWidth="111.0" style="-fx-background-color: #ffd700;" text="New Playlist" />
+      <Label layoutX="532.0" layoutY="466.0" prefHeight="48.0" prefWidth="207.0" text="Choose Playlist">
+         <font>
+            <Font size="29.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.8313725590705872" green="0.686274528503418" blue="0.27843138575553894" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="0.843137264251709" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <ListView fx:id="playlistsListview" layoutX="540.0" layoutY="521.0" prefHeight="200.0" prefWidth="397.0" style="-fx-background-color: #222222;" />
    </children>
 </AnchorPane>
