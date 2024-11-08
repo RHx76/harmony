@@ -1,13 +1,20 @@
 package com.example.demo;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
@@ -152,6 +159,30 @@ public class HelloController implements Initializable {
         running=false;
         if(timer!=null)
             timer.cancel();
+    }
+
+    @FXML
+    private void openPlaylistCreationScene() {
+        try {
+            Stage mainStage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("PlaylistCreator.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            mainStage.setScene(scene);
+            mainStage.setTitle("New Playlist");
+            Image icon=new Image("bully.jpg");
+            mainStage.getIcons().add(icon);
+            mainStage.show();
+            mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    Platform.exit();
+                    System.exit(0);
+                }
+            });
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
