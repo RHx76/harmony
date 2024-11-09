@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -58,7 +59,7 @@ public class HelloController implements Initializable {
 
     private boolean running;
 
-    private Media media;
+    private Media  media;
 
     private MediaPlayer mediaPlayer;
 
@@ -67,6 +68,14 @@ public class HelloController implements Initializable {
 
     @FXML
     private ListView<String> playlistsListview;
+
+    @FXML
+    private ImageView coverImageView;
+
+    @FXML
+    private Label artistNameLabel;
+
+    private MetadataExtractor metadataExtractor;
 
     @FXML
     public void playMedia()
@@ -102,6 +111,10 @@ public class HelloController implements Initializable {
         media = new Media(songs.get(songNumber).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         songLabel.setText(songs.get(songNumber).getName());
+        SongMetaData metaData=metadataExtractor.getMetadata(songs.get(songNumber));
+        coverImageView.setImage(metaData.coverImage);
+        songLabel.setText(metaData.songName);
+        artistNameLabel.setText(metaData.artistName);
         if(running)
             timer.cancel();
     }
@@ -118,6 +131,10 @@ public class HelloController implements Initializable {
         media = new Media(songs.get(songNumber).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         songLabel.setText(songs.get(songNumber).getName());
+        SongMetaData metaData=metadataExtractor.getMetadata(songs.get(songNumber));
+        coverImageView.setImage(metaData.coverImage);
+        songLabel.setText(metaData.songName);
+        artistNameLabel.setText(metaData.artistName);
         if(running)
             timer.cancel();
     }
@@ -193,6 +210,7 @@ public class HelloController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        metadataExtractor=new MetadataExtractor();
         songs=new ArrayList<File>();
         directory=new File("music");
         files = directory.listFiles();
@@ -217,6 +235,10 @@ public class HelloController implements Initializable {
             media = new Media(songs.get(songNumber).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
             songLabel.setText(songs.get(songNumber).getName());
+            SongMetaData metaData=metadataExtractor.getMetadata(songs.get(songNumber));
+            coverImageView.setImage(metaData.coverImage);
+            songLabel.setText(metaData.songName);
+            artistNameLabel.setText(metaData.artistName);
         }
 
         for(int i=0;i<speeds.length;i++)
@@ -261,6 +283,12 @@ public class HelloController implements Initializable {
                 media = new Media(songs.get(songNumber).toURI().toString());
                 mediaPlayer = new MediaPlayer(media);
                 songLabel.setText(songs.get(songNumber).getName());
+
+                SongMetaData metaData=metadataExtractor.getMetadata(songs.get(songNumber));
+                coverImageView.setImage(metaData.coverImage);
+                songLabel.setText(metaData.songName);
+                artistNameLabel.setText(metaData.artistName);
+
                 if(running)
                     timer.cancel();
             }
@@ -342,6 +370,11 @@ public class HelloController implements Initializable {
                     media = new Media(songs.get(songNumber).toURI().toString());
                     mediaPlayer = new MediaPlayer(media);
                     songLabel.setText(songs.get(songNumber).getName());
+                    SongMetaData metaData=metadataExtractor.getMetadata(songs.get(songNumber));
+                    coverImageView.setImage(metaData.coverImage);
+                    songLabel.setText(metaData.songName);
+                    artistNameLabel.setText(metaData.artistName);
+
                     if(running)
                         timer.cancel();
 
