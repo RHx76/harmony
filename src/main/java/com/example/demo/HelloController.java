@@ -208,6 +208,35 @@ public class HelloController implements Initializable {
         }
     }
 
+    @FXML
+    void loopCurrentSong()
+    {
+        System.out.println("looooop");
+        mediaPlayer.setCycleCount(mediaPlayer.getCycleCount()==MediaPlayer.INDEFINITE?1:MediaPlayer.INDEFINITE);
+    }
+
+
+    @FXML
+    void shuffleCurrentQueue()
+    {
+        pauseMedia();
+        Collections.shuffle(songs);
+        myListView.getItems().clear();
+        for(File file:songs)
+        {
+            myListView.getItems().add(file.getName());
+        }
+        songNumber=0;
+        media=new Media(songs.get(songNumber).toURI().toString());
+        mediaPlayer=new MediaPlayer(media);
+        songLabel.setText(songs.get(songNumber).getName());
+        SongMetaData metaData=metadataExtractor.getMetadata(songs.get(songNumber));
+        coverImageView.setImage(metaData.coverImage);
+        songLabel.setText(metaData.songName);
+        artistNameLabel.setText(metaData.artistName);
+        playMedia();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         metadataExtractor=new MetadataExtractor();
