@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -44,11 +43,10 @@
                   <Font size="37.0" />
                </font>
             </Label>
-            <ProgressBar fx:id="songProgressBar" layoutX="65.0" layoutY="277.0" prefHeight="22.0" prefWidth="840.0" progress="0.0" style="-fx-background-color: green;" />
             <Button fx:id="playButton" layoutX="247.0" layoutY="322.0" mnemonicParsing="false" onAction="#playMedia" prefHeight="46.0" prefWidth="92.0" style="-fx-background-color: #ffd700;" text="Play" />
             <Button fx:id="pauseButton" layoutX="355.0" layoutY="319.0" mnemonicParsing="false" onAction="#pauseMedia" prefHeight="46.0" prefWidth="92.0" style="-fx-background-color: #ffd700;" text="Pause" />
             <Button fx:id="resetButton" layoutX="473.0" layoutY="319.0" mnemonicParsing="false" onAction="#resetMedia" prefHeight="46.0" prefWidth="92.0" style="-fx-background-color: #ffd700;" text="Reset" />
-            <Button fx:id="previousButton" layoutX="154.0" layoutY="123.0" mnemonicParsing="false" onAction="#previousMedia" prefHeight="46.0" prefWidth="92.0" style="-fx-background-color: #ffd700;" text="Previous" />
+            <Button fx:id="previousButton" layoutX="88.0" layoutY="130.0" mnemonicParsing="false" onAction="#previousMedia" prefHeight="46.0" prefWidth="92.0" style="-fx-background-color: #ffd700;" text="Previous" />
             <Button fx:id="nextButton" layoutX="781.0" layoutY="122.0" mnemonicParsing="false" onAction="#nextMedia" prefHeight="46.0" prefWidth="92.0" style="-fx-background-color: #ffd700;" text="Next" />
             <ComboBox fx:id="speedComboBox" layoutX="584.0" layoutY="320.0" onAction="#changeSpeed" prefHeight="46.0" prefWidth="115.0" promptText="Speed" style="-fx-background-color: #ffd700;" />
             <Slider fx:id="volumeMedia" layoutX="711.0" layoutY="321.0" onDragDetected="#onVolumeChange" prefHeight="46.0" prefWidth="195.0" value="50.0" />
@@ -57,6 +55,7 @@
                   <Image url="@../../../bully.jpg" />
                </image>
             </ImageView>
+            <Slider fx:id="songProgressSlider" blockIncrement="0.01" layoutX="188.0" layoutY="269.0" max="1.0" prefHeight="24.0" prefWidth="584.0" style="-fx-acce: #ffd700;" />
          </children>
       </AnchorPane>
       <ListView fx:id="myListView" layoutX="32.0" layoutY="523.0" prefHeight="200.0" prefWidth="397.0" style="-fx-background-color: #222222;" />
@@ -81,7 +80,7 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <Button fx:id="newPlaylistButton" layoutX="252.0" layoutY="477.0" mnemonicParsing="false" onAction="#openPlaylistCreationScene" prefHeight="32.0" prefWidth="111.0" style="-fx-background-color: #ffd700;" text="New Playlist" />
+      <Button fx:id="newPlaylistButton" layoutX="820.0" layoutY="475.0" mnemonicParsing="false" onAction="#openPlaylistCreationScene" prefHeight="32.0" prefWidth="111.0" style="-fx-background-color: #ffd700;" text="New Playlist" />
       <Label layoutX="532.0" layoutY="466.0" prefHeight="48.0" prefWidth="207.0" text="Choose Playlist">
          <font>
             <Font size="29.0" />

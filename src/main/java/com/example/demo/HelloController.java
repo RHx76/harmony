@@ -36,7 +36,7 @@ public class HelloController implements Initializable {
     @FXML
     public Button playButton,pauseButton,resetButton,previousButton,nextButton;
     @FXML
-    public ProgressBar songProgressBar;
+    public Slider songProgressSlider;
     @FXML
     public ComboBox<String> speedComboBox;
     @FXML
@@ -86,7 +86,7 @@ public class HelloController implements Initializable {
 
     @FXML
     public void resetMedia(){
-        songProgressBar.setProgress(0);
+        songProgressSlider.setValue(0);
         mediaPlayer.seek(Duration.seconds(0));
     }
 
@@ -147,7 +147,7 @@ public class HelloController implements Initializable {
                 running=true;
                 double current=mediaPlayer.getCurrentTime().toSeconds();
                 double end=mediaPlayer.getTotalDuration().toSeconds();
-                songProgressBar.setProgress(current/end);
+                songProgressSlider.setValue(current/end);
 
                 if(current/end==1)
                 {
@@ -156,7 +156,7 @@ public class HelloController implements Initializable {
             }
         };
 
-        timer.scheduleAtFixedRate(task,0,1000);
+        timer.scheduleAtFixedRate(task,0,0010);
     }
 
     @FXML
@@ -191,13 +191,11 @@ public class HelloController implements Initializable {
         }
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         songs=new ArrayList<File>();
         directory=new File("music");
         files = directory.listFiles();
-//        System.out.println("hey!"+directory.getAbsolutePath());
 
         if(files!=null)
         {
@@ -206,6 +204,14 @@ public class HelloController implements Initializable {
                 songs.add(file);
                 myListView.getItems().add(file.getName());
                 System.out.println(file);
+            }
+
+            int times=5-files.length;
+            System.out.println(times+"times");
+            while(times>=0)
+            {
+                myListView.getItems().add("");
+                times--;
             }
 
             media = new Media(songs.get(songNumber).toURI().toString());
@@ -225,7 +231,7 @@ public class HelloController implements Initializable {
                 mediaPlayer.setVolume(volumeMedia.getValue()*0.01);
             }
         });
-        songProgressBar.setStyle("-fx-accent: #ffdd00;");
+        songProgressSlider.setStyle("-fx-accent: #ffdd00;");
         myListView.setStyle("-fx-accent: #ffdd00; -fx-background-color:#222222 !important;");
         myListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             @Override
@@ -263,14 +269,24 @@ public class HelloController implements Initializable {
         File directory=new File("./");
         File[] files = directory.listFiles();
         System.out.println("hey!123"+directory.getAbsolutePath());
-
+        int c=0;
         if(files!=null)
         {
             for(File file:files)
             {
                 if(file.getName().endsWith(".ser"))
+                {
                     playlistsListview.getItems().add(file.getName().substring(0,file.getName().indexOf('.')));
+                    c++;
+                }
             }
+        }
+
+        int times=5-c;
+        while(times>=0)
+        {
+            playlistsListview.getItems().add("");
+            times--;
         }
 
         playlistsListview.setStyle("-fx-accent: #ffdd00; -fx-background-color:#222222 !important;");
@@ -314,6 +330,14 @@ public class HelloController implements Initializable {
                         System.out.println(file);
                     }
 
+                    int times=5-fileList.size();
+                    System.out.println(times+"times");
+                    while(times>=0)
+                    {
+                        myListView.getItems().add("");
+                        times--;
+                    }
+
                     songNumber=0;
                     media = new Media(songs.get(songNumber).toURI().toString());
                     mediaPlayer = new MediaPlayer(media);
@@ -325,6 +349,21 @@ public class HelloController implements Initializable {
                     e.printStackTrace();
                 }
             }
+        });
+
+        songProgressSlider.setOnMousePressed(mouseEvent -> {
+            cancelTime();
+        });
+
+        songProgressSlider.setOnMouseReleased(mouseEvent -> {
+            System.out.println("mouse released!");
+            double secondsToSeek2=songProgressSlider.getValue()*mediaPlayer.getTotalDuration().toSeconds();
+            System.out.println(secondsToSeek2);
+            System.out.println("Total Duration:"+mediaPlayer.getTotalDuration().toSeconds());
+            System.out.println("slider val:"+songProgressSlider.getValue());
+            Duration d=Duration.seconds(secondsToSeek2);
+            mediaPlayer.seek(d);
+            beginTimer();
         });
     }
 
